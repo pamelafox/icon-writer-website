@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dock Icon Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
+  <body>
+      <div class="container">
+        <h1>Dock Icon Generator</h1>
+
+        <p>Use this simple tool to generate dock icons. <br>
+            Try some examples:
+            <button type="button" id="exampleBtnVSCODE" class="btn btn-link">VSCODE</button>
+            <button type="button" id="exampleBtnTEAMS" class="btn btn-link">TEAMS</button>
+            <button type="button" id="exampleBtnEDGE" class="btn btn-link">EDGE</button>
+        </p>
+
+        <form id="iconForm" style="max-width: 500px">
+            <div class="mb-3 row">
+                <label for="formText" class="form-label col-sm-4">Icon text:</label>
+                <div class="col-sm-6">
+                <input name="text" type="text" class="form-control" id="formText" style="width:6em;" required>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="formSize" class="form-label col-sm-4">Icon size:</label>
+                <div class="col-sm-6">
+                <input name="size" type="number" class="form-control" id="formSize" value="80" style="width:6em;">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="formBgColor" class="form-label col-sm-4">Background color:</label>
+                <div class="col-sm-6">
+                <input name="bgcolor" type="color" class="form-control form-control-color" id="formBgColor" value="#000000">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="formFontColor" class="form-label col-sm-4">Text color:</label>
+                <div class="col-sm-6">
+                <input name="fontcolor" type="color" class="form-control form-control-color" id="formFontColor" value="#ffffff">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate icon</button>
+        </form>
+
+        <div id="output" style="margin-bottom: 20px; margin-top: 20px;">
+
+
+        </div>
+
+        <br>
+
+        <p>Once generated and downloaded, you can set them as icons following <a target="_blank" href="https://9to5mac.com/2021/11/08/change-mac-icons/">these instructions</a>.</p>
+
+        <script>
+function generateIcon() {
+  document.getElementById("output").innerHTML = "Generating...";
+  const formData = new FormData(form);
+  const params = new URLSearchParams(formData);
+
+  const image = document.createElement("img");
+  image.src = `https://icon-writer-function.azurewebsites.net/api/iconwriter?${params}`
+  document.getElementById("output").innerHTML = "";
+  document.getElementById("output").appendChild(image);
+}
+
+function presetValues(text, bgColor, fontColor) {
+    form.querySelector("#formText").value = text;
+    form.querySelector("#formSize").value = 80;
+    form.querySelector("#formBgColor").value = bgColor;
+    form.querySelector("#formFontColor").value = fontColor;
+    generateIcon();
+}
+
+const form = document.getElementById("iconForm");
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  generateIcon();
+});
+
+document.getElementById("exampleBtnVSCODE").addEventListener('click', (evt) => {
+    presetValues("VSCODE", "#0066B9", "#ffffff");
+});
+document.getElementById("exampleBtnTEAMS").addEventListener('click', (evt) => {
+    presetValues("TEAMS", "#5F5BCC", "#ffffff");
+});
+document.getElementById("exampleBtnEDGE").addEventListener('click', (evt) => {
+    presetValues("TEAMS", "#2DF88D", "#0242A2");
+});
+</script>
+
+      </div>
+  </body>
+</html>
