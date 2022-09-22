@@ -60,8 +60,9 @@ function generateIcon() {
   const formData = new FormData(form);
   const params = new URLSearchParams(formData);
 
+  const key = "6e439698dca2482ab84e78cb09994c5e";
   const image = document.createElement("img");
-  image.src = `https://icon-writer-function.azurewebsites.net/api/iconwriter?${params}`
+  image.src = `https://iconwriterfunction-apim.azure-api.net/icon-writer-function/IconWriter?${params}&subscription-key=${key}`
   document.getElementById("output").innerHTML = "";
   document.getElementById("output").appendChild(image);
 }
